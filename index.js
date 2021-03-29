@@ -24,7 +24,7 @@ function authorize(credentials) {
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
-    //if (err) return getNewToken(oAuth2Client, callback);
+    if (err) return getNewToken(oAuth2Client, callback);
     oAuth2Client.setCredentials(JSON.parse(token));
   });
   return oAuth2Client;
@@ -126,7 +126,7 @@ function getRegion1(message, auth) {
       range: 'Region1!A1:E',
     }, (err, res) => {
       if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 1', res, message);
+      displayRegionResults('==========Region 1==========', res, message);
     });
 }
 
@@ -247,17 +247,31 @@ function getRegion12(message, auth) {
       range: 'Region12!A1:E',
     }, (err, res) => {
       if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 15', res, message);
+      displayRegionResults('Region 12', res, message);
     });
 }
 
+let r1Map = new Map([
+	['1️⃣', 'None'],
+	['2️⃣', 'None'],
+	['3️⃣', 'None'],
+	['4️⃣', 'None'],
+	['5️⃣', 'None'],
+	['6️⃣', 'None'],
+	['7️⃣', 'None'],
+	['8️⃣', 'None'],
+	['9️⃣', 'None'],
+	['🔟', 'None']
+]);
+
 function displayRegionResults(title, res, message) {
-    const rows = res.data.values;
-    const region1Embed = new Discord.MessageEmbed()
+    //const rows = res.data.values;
+    const regionEmbed = new Discord.MessageEmbed()
         .setColor(255);
+		/*
     if (rows.length) {
       // Print columns A and B, which correspond to indices 0 and 4.
-      rows.map((row) => {
+      rows.map((row) => {[
         if (row[0] === `title`) {
           region1Embed.setTitle(`====== ${row[1]} ======`)
         } else if (row[0] === `footer`) {
@@ -268,6 +282,36 @@ function displayRegionResults(title, res, message) {
       });
       message.channel.send(region1Embed);
     }
+	*/
+	regionEmbed.setTitle(title);
+	for (let row of r1Map) {
+		regionEmbed.addField(`${row[0]} - ${row[1]}`, '\u200b');
+	}
+	message.channel.send(regionEmbed)
+		.then(message => {
+			message.react(`1️⃣`)
+			.then(() => message.react(`2️⃣`))
+			.then(() => message.react(`3️⃣`))
+			.then(() => message.react(`4️⃣`))
+			.then(() => message.react(`5️⃣`))
+			.then(() => message.react(`6️⃣`))
+			.then(() => message.react(`7️⃣`))
+			.then(() => message.react(`8️⃣`))
+			.then(() => message.react(`9️⃣`))
+			.then(() => message.react(`🔟`));
+			message.awaitReactions((args, user) => {
+				if (!user.bot) {
+					r1Map.set(args._emoji.name, user.username);
+					let updateEmbed = new Discord.MessageEmbed()
+					.setColor(255)
+					.setTitle(title);
+					for (let row of r1Map) {
+						updateEmbed.addField(`${row[0]} - ${row[1]}`, '\u200b');
+					}
+					message.edit(updateEmbed);
+				}
+			})
+		})
 }
 
 function displaySpreadsheetLink(message) {
