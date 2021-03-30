@@ -10,6 +10,21 @@ const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const TOKEN_PATH = 'token.json';
 
 var auth;
+
+const defaultRMap = new Map([
+	['1️⃣', 'None'],
+	['2️⃣', 'None'],
+	['3️⃣', 'None'],
+	['4️⃣', 'None'],
+	['5️⃣', 'None'],
+	['6️⃣', 'None'],
+	['7️⃣', 'None'],
+	['8️⃣', 'None'],
+	['9️⃣', 'None'],
+	['🔟', 'None']
+]);
+
+/*
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
@@ -29,6 +44,7 @@ function authorize(credentials) {
   });
   return oAuth2Client;
 }
+*/
 
 const {prefix, token} = require('./config.json');
 const Discord = require("discord.js");
@@ -45,25 +61,25 @@ client.on('message', message => {
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
     if (command === `r1`) {
-        getRegion1(message, auth);
+        getRegion1(message);
     } else if(command === `r3`) {
-        getRegion3(message, auth);
+        getRegion3(message);
     } else if(command === `r4`) {
-        getRegion4(message, auth);
+        getRegion4(message);
     } else if(command === `r5`) {
-        getRegion5(message, auth);
+        getRegion5(message);
     } else if(command === `r6`) {
-        getRegion6(message, auth);
+        getRegion6(message);
     } else if(command === `r7`) {
-        getRegion7(message, auth);
+        getRegion7(message);
     } else if(command === `r8`) {
-        getRegion8(message, auth);
+        getRegion8(message);
     } else if(command === `r9`) {
-        getRegion9(message, auth);
+        getRegion9(message);
     } else if(command === `r11`) {
-        getRegion11(message, auth);
+        getRegion11(message);
     } else if(command === `r12`) {
-        getRegion12(message, auth);
+        getRegion12(message);
     } else if(command === `meta`) {
         const metaEmbed = {
             title: 'AC Metas',
@@ -119,172 +135,67 @@ client.on('messageReactionAdd', (reaction, user) => {
     };
 });
 
-function getRegion1(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region1!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('==========Region 1==========', res, message);
-    });
+function getRegion1(message) {
+	let r1 = new Map(defaultRMap);
+	displayRegionResults('==========Region 1==========', r1, message);
 }
 
-function getRegion2(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region2!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 2', res, message);
-    });
+
+function getRegion3(message) {
+	let r3 = new Map(defaultRMap);
+    displayRegionResults('==========Region 3==========', r3, message);
 }
 
-function getRegion3(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region3!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 3', res, message);
-    });
+function getRegion4(message) {
+	let r4 = new Map(defaultRMap);
+    displayRegionResults('==========Region 4==========', r4, message);
 }
 
-function getRegion4(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region4!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 4', res, message);
-    });
+function getRegion5(message) {
+	let r5 = new Map(defaultRMap);
+    displayRegionResults('==========Region 5==========', r5, message);	
 }
 
-function getRegion5(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region5!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 5', res, message);
-    });
+function getRegion6(message) {
+	let r6 = new Map(defaultRMap);
+    displayRegionResults('==========Region 6==========', r6, message);
 }
 
-function getRegion6(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region6!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 6', res, message);
-    });
+function getRegion7(message) {
+	let r7 = new Map(defaultRMap);
+    displayRegionResults('==========Region 7==========', r7, message);
 }
 
-function getRegion7(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region7!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 7', res, message);
-    });
+function getRegion8(message) {
+	let r8 = new Map(defaultRMap);
+    displayRegionResults('==========Region 8==========', r8, message);
 }
 
-function getRegion8(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region8!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 8', res, message);
-    });
+function getRegion9(message) {
+	let r9 = new Map(defaultRMap);
+    displayRegionResults('==========Region 9==========', r9, message);
 }
 
-function getRegion9(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region9!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 9', res, message);
-    });
+function getRegion10(message) {
+	let r10 = new Map(defaultRMap);
+    displayRegionResults('==========Region 10==========', r10, message);
 }
 
-function getRegion10(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region10!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 10', res, message);
-    });
+function getRegion11(message) {
+	let r11 = new Map(defaultRMap);
+    displayRegionResults('==========Region 11==========', r11, message);
 }
 
-function getRegion11(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region11!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 11', res, message);
-    });
+function getRegion12(message) {
+	let r12 = new Map(defaultRMap);
+    displayRegionResults('==========Region 12==========', r12, message);
 }
 
-function getRegion12(message, auth) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: '1QvFcxojYP-3sjdialW5EEiZY7dKqPRoNLZ0b9ILRF5g',
-      range: 'Region12!A1:E',
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      displayRegionResults('Region 12', res, message);
-    });
-}
-
-let r1Map = new Map([
-	['1️⃣', 'None'],
-	['2️⃣', 'None'],
-	['3️⃣', 'None'],
-	['4️⃣', 'None'],
-	['5️⃣', 'None'],
-	['6️⃣', 'None'],
-	['7️⃣', 'None'],
-	['8️⃣', 'None'],
-	['9️⃣', 'None'],
-	['🔟', 'None']
-]);
-
-function displayRegionResults(title, res, message) {
-    //const rows = res.data.values;
+function displayRegionResults(title, region, message) {
     const regionEmbed = new Discord.MessageEmbed()
-        .setColor(255);
-		/*
-    if (rows.length) {
-      // Print columns A and B, which correspond to indices 0 and 4.
-      rows.map((row) => {[
-        if (row[0] === `title`) {
-          region1Embed.setTitle(`====== ${row[1]} ======`)
-        } else if (row[0] === `footer`) {
-          region1Embed.setFooter(row[1]);
-        } else {
-          region1Embed.addField(`${row[1]} ⚔️ ${row[0]}`, `\u200b`);
-        }
-      });
-      message.channel.send(region1Embed);
-    }
-	*/
-	regionEmbed.setTitle(title);
-	for (let row of r1Map) {
+        .setColor(255)
+		.setTitle(title);
+	for (let row of region) {
 		regionEmbed.addField(`${row[0]} - ${row[1]}`, '\u200b');
 	}
 	message.channel.send(regionEmbed)
@@ -300,17 +211,33 @@ function displayRegionResults(title, res, message) {
 			.then(() => message.react(`9️⃣`))
 			.then(() => message.react(`🔟`));
 			message.awaitReactions((args, user) => {
-				if (!user.bot) {
-					r1Map.set(args._emoji.name, user.username);
+				if (!user.bot && region.get(args._emoji.name) === 'None') {
+					//console.log(user);
+					region.set(args._emoji.name, user.username);
 					let updateEmbed = new Discord.MessageEmbed()
 					.setColor(255)
 					.setTitle(title);
-					for (let row of r1Map) {
+					for (let row of region) {
 						updateEmbed.addField(`${row[0]} - ${row[1]}`, '\u200b');
 					}
 					message.edit(updateEmbed);
 				}
 			})
+			const filter = () => {return true;}
+			const collector = message.createReactionCollector(filter, {dispose: true});
+			// event emitts when the reaction had one user removed
+			collector.on('remove', (reaction, user) => {
+				if (region.get(reaction.emoji.name) === user.username) {
+					region.set(reaction._emoji.name, 'None');
+					let updateEmbed = new Discord.MessageEmbed()
+					.setColor(255)
+					.setTitle(title);
+					for (let row of region) {
+						updateEmbed.addField(`${row[0]} - ${row[1]}`, '\u200b');
+					}
+					message.edit(updateEmbed);
+				}
+			});
 		})
 }
 
