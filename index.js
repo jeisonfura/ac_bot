@@ -215,11 +215,13 @@ function displayRegionResults(title, region, message) {
 				if (!user.bot) {
 					if (args._emoji.name === `📋`) {
 						// generate summary of message
-						let msgSummary = title + '\n';
+						let msgSummary = '';
 						let count = 0;
 						for (let row of region) {
+							let sumName = '-'+row[1].substring(0,3);
+							if (sumName === '-Non') sumName = '...';
 							count++;
-							msgSummary += `${count}-${row[1].substring(0,3)} `
+							msgSummary += `${count}${sumName} `
 						}
 						user.send(msgSummary)
 						// remove reaction
