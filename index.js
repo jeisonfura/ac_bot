@@ -209,18 +209,33 @@ function displayRegionResults(title, region, message) {
 			.then(() => message.react(`7️⃣`))
 			.then(() => message.react(`8️⃣`))
 			.then(() => message.react(`9️⃣`))
-			.then(() => message.react(`🔟`));
+			.then(() => message.react(`🔟`))
+			.then(() => message.react(`📋`));
 			message.awaitReactions((args, user) => {
-				if (!user.bot && region.get(args._emoji.name) === 'None') {
-					//console.log(user);
-					region.set(args._emoji.name, user.username);
-					let updateEmbed = new Discord.MessageEmbed()
-					.setColor(255)
-					.setTitle(title);
-					for (let row of region) {
-						updateEmbed.addField(`${row[0]} - ${row[1]}`, '\u200b');
+				if (!user.bot) {
+					if (args._emoji.name === `📋`) {
+						// generate summary of message
+						let msgSummary = title + '\n';
+						let count = 0;
+						for (let row of region) {
+							count++;
+							msgSummary += `${count}-${row[1].substring(0,3)} `
+						}
+						user.send(msgSummary)
+						// remove reaction
+
+						//message.reactions.get("📋").remove(user);
+					} else if (region.get(args._emoji.name) === 'None') {
+						//console.log(user);
+						region.set(args._emoji.name, user.username);
+						let updateEmbed = new Discord.MessageEmbed()
+						.setColor(255)
+						.setTitle(title);
+						for (let row of region) {
+							updateEmbed.addField(`${row[0]} - ${row[1]}`, '\u200b');
+						}
+						message.edit(updateEmbed);
 					}
-					message.edit(updateEmbed);
 				}
 			})
 			const filter = () => {return true;}
