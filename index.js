@@ -230,8 +230,10 @@ function displayRegionResults(title, region, message) {
 
 						//message.reactions.get("📋").remove(user);
 					} else if (region.get(args._emoji.name) === '') {
-						//console.log(user);
-						region.set(args._emoji.name, user.username);
+						//console.log(message.guild.members.cache.get(user.id).nickname);
+						let displayName = message.guild.members.cache.get(user.id).nickname
+						if (!displayName) displayName = user.username;
+						region.set(args._emoji.name, displayName);
 						let updateEmbed = new Discord.MessageEmbed()
 						.setColor(255)
 						.setTitle(title);
@@ -248,7 +250,10 @@ function displayRegionResults(title, region, message) {
 			const collector = message.createReactionCollector(filter, {dispose: true});
 			// event emitts when the reaction had one user removed
 			collector.on('remove', (reaction, user) => {
-				if (region.get(reaction.emoji.name) === user.username) {
+				let displayName = message.guild.members.cache.get(user.id).nickname
+				if (!displayName) displayName = user.username;
+				region.set(reaction._emoji.name, displayName);
+				if (region.get(reaction.emoji.name) === displayName) {
 					region.set(reaction._emoji.name, '');
 					let updateEmbed = new Discord.MessageEmbed()
 					.setColor(255)
