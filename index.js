@@ -12,16 +12,16 @@ const TOKEN_PATH = 'token.json';
 var auth;
 
 const defaultRMap = new Map([
-	['1️⃣', 'None'],
-	['2️⃣', 'None'],
-	['3️⃣', 'None'],
-	['4️⃣', 'None'],
-	['5️⃣', 'None'],
-	['6️⃣', 'None'],
-	['7️⃣', 'None'],
-	['8️⃣', 'None'],
-	['9️⃣', 'None'],
-	['🔟', 'None']
+	['1️⃣', ''],
+	['2️⃣', ''],
+	['3️⃣', ''],
+	['4️⃣', ''],
+	['5️⃣', ''],
+	['6️⃣', ''],
+	['7️⃣', ''],
+	['8️⃣', ''],
+	['9️⃣', ''],
+	['🔟', '']
 ]);
 
 /*
@@ -137,66 +137,68 @@ client.on('messageReactionAdd', (reaction, user) => {
 
 function getRegion1(message) {
 	let r1 = new Map(defaultRMap);
-	displayRegionResults('==========Region 1==========', r1, message);
+	displayRegionResults('========== Region 1 ==========', r1, message);
 }
 
 
 function getRegion3(message) {
 	let r3 = new Map(defaultRMap);
-    displayRegionResults('==========Region 3==========', r3, message);
+    displayRegionResults('========== Region 3 ==========', r3, message);
 }
 
 function getRegion4(message) {
 	let r4 = new Map(defaultRMap);
-    displayRegionResults('==========Region 4==========', r4, message);
+    displayRegionResults('========== Region 4 ==========', r4, message);
 }
 
 function getRegion5(message) {
 	let r5 = new Map(defaultRMap);
-    displayRegionResults('==========Region 5==========', r5, message);	
+    displayRegionResults('========== Region 5 ==========', r5, message);	
 }
 
 function getRegion6(message) {
 	let r6 = new Map(defaultRMap);
-    displayRegionResults('==========Region 6==========', r6, message);
+    displayRegionResults('========== Region 6 ==========', r6, message);
 }
 
 function getRegion7(message) {
 	let r7 = new Map(defaultRMap);
-    displayRegionResults('==========Region 7==========', r7, message);
+    displayRegionResults('========== Region 7 ==========', r7, message);
 }
 
 function getRegion8(message) {
 	let r8 = new Map(defaultRMap);
-    displayRegionResults('==========Region 8==========', r8, message);
+    displayRegionResults('========== Region 8 ==========', r8, message);
 }
 
 function getRegion9(message) {
 	let r9 = new Map(defaultRMap);
-    displayRegionResults('==========Region 9==========', r9, message);
+    displayRegionResults('========== Region 9 ==========', r9, message);
 }
 
 function getRegion10(message) {
 	let r10 = new Map(defaultRMap);
-    displayRegionResults('==========Region 10==========', r10, message);
+    displayRegionResults('========== Region 10 ==========', r10, message);
 }
 
 function getRegion11(message) {
 	let r11 = new Map(defaultRMap);
-    displayRegionResults('==========Region 11==========', r11, message);
+    displayRegionResults('========== Region 11 ==========', r11, message);
 }
 
 function getRegion12(message) {
 	let r12 = new Map(defaultRMap);
-    displayRegionResults('==========Region 12==========', r12, message);
+    displayRegionResults('========== Region 12 ==========', r12, message);
 }
 
 function displayRegionResults(title, region, message) {
     const regionEmbed = new Discord.MessageEmbed()
         .setColor(255)
 		.setTitle(title);
+	let areaCount = 1
 	for (let row of region) {
-		regionEmbed.addField(`${row[0]} - ${row[1]}`, '\u200b');
+		regionEmbed.addField(`${areaCount} - ${row[1]}`, '\u200b');
+		areaCount++;
 	}
 	message.channel.send(regionEmbed)
 		.then(message => {
@@ -227,14 +229,16 @@ function displayRegionResults(title, region, message) {
 						// remove reaction
 
 						//message.reactions.get("📋").remove(user);
-					} else if (region.get(args._emoji.name) === 'None') {
+					} else if (region.get(args._emoji.name) === '') {
 						//console.log(user);
 						region.set(args._emoji.name, user.username);
 						let updateEmbed = new Discord.MessageEmbed()
 						.setColor(255)
 						.setTitle(title);
+						let areaCount = 1;
 						for (let row of region) {
-							updateEmbed.addField(`${row[0]} - ${row[1]}`, '\u200b');
+							updateEmbed.addField(`${areaCount} - ${row[1]}`, '\u200b');
+							areaCount++;
 						}
 						message.edit(updateEmbed);
 					}
@@ -245,12 +249,14 @@ function displayRegionResults(title, region, message) {
 			// event emitts when the reaction had one user removed
 			collector.on('remove', (reaction, user) => {
 				if (region.get(reaction.emoji.name) === user.username) {
-					region.set(reaction._emoji.name, 'None');
+					region.set(reaction._emoji.name, '');
 					let updateEmbed = new Discord.MessageEmbed()
 					.setColor(255)
 					.setTitle(title);
+					let areaCount = 1;
 					for (let row of region) {
-						updateEmbed.addField(`${row[0]} - ${row[1]}`, '\u200b');
+						updateEmbed.addField(`${areaCount} - ${row[1]}`, '\u200b');
+						areaCount++;
 					}
 					message.edit(updateEmbed);
 				}
